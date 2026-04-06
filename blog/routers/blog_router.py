@@ -8,11 +8,11 @@ from blog.database import get_db
 from blog.schemas import BlogBase, ShowBlog
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/blogs", tags=["blogs"])
 
 
 @router.get(
-    "/blog",
+    "",
     response_model=List[ShowBlog],
     status_code=status.HTTP_200_OK,
     tags=["blogs"],
@@ -22,9 +22,7 @@ def all(db: Session = Depends(get_db)):
     return blogs
 
 
-@router.post(
-    "/blog", status_code=status.HTTP_201_CREATED, description="hello", tags=["blogs"]
-)
+@router.post("", status_code=status.HTTP_201_CREATED, description="hello")
 def create(request: BlogBase, db: Session = Depends(get_db)):
     new_blog = models.Blog(title=request.title, body=request.body, user_id=1)
     db.add(new_blog)
@@ -33,7 +31,7 @@ def create(request: BlogBase, db: Session = Depends(get_db)):
     return new_blog
 
 
-@router.get("/blog/{id}", response_model=ShowBlog, tags=["blogs"])
+@router.get("/{id}", response_model=ShowBlog)
 def show(id: int, response: Response, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
 
@@ -50,7 +48,7 @@ def show(id: int, response: Response, db: Session = Depends(get_db)):
     # }
 
 
-@router.delete("/blog/{id}", tags=["blogs"])
+@router.delete("/{id}")
 def destroy(id: int, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     if not blog:
@@ -62,7 +60,7 @@ def destroy(id: int, db: Session = Depends(get_db)):
     db.commit()  # ✅ commit transaction
 
 
-@router.put("/blog/{id}", status_code=status.HTTP_200_OK, tags=["blogs"])
+@router.put("/{id}", status_code=status.HTTP_200_OK)
 def update(id, request: BlogBase, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
 
