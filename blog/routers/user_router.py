@@ -10,11 +10,7 @@ from blog.schemas import ShowUser, UserSchema
 router = APIRouter(prefix="/api/user", tags=["user"])
 
 
-@router.post(
-    "",
-    status_code=status.HTTP_201_CREATED,
-    response_model=ShowUser,
-)
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=ShowUser)
 def create_user(request: UserSchema, db: Session = Depends(get_db)):
     # Check if a user with the email already exists
     existing_user = (

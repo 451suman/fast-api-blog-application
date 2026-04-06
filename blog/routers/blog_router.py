@@ -12,10 +12,7 @@ router = APIRouter(prefix="/api/blogs", tags=["blogs"])
 
 
 @router.get(
-    "",
-    response_model=List[ShowBlog],
-    status_code=status.HTTP_200_OK,
-    tags=["blogs"],
+    "", response_model=List[ShowBlog], status_code=status.HTTP_200_OK, tags=["blogs"]
 )
 def all(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
