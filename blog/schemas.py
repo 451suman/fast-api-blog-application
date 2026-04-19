@@ -12,12 +12,20 @@ class UserSchema(BaseModel):
     password: str
 
 
+class UserSchemaOut(BaseModel):
+    name: str
+    email: str
+
+    class config:
+        from_attributes = True
+
+
 from typing import List
 
 
 class Blog(BlogBase):
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ShowUser(BaseModel):
@@ -27,7 +35,7 @@ class ShowUser(BaseModel):
     blogs: List[Blog] = []
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ShowBlog(BaseModel):
@@ -36,4 +44,4 @@ class ShowBlog(BaseModel):
     creator: ShowUser
 
     class Config:
-        orm_mode = True
+        from_attributes = True
