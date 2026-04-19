@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
 from pwdlib import PasswordHash
 from typing import List
-from blog.routers import blog_router, user_router
+from blog.routers import blog_router, user_router, auth
 
 app = FastAPI()
 # models.Base.metadata.drop_all(bind=engine)
@@ -14,5 +14,7 @@ app = FastAPI()
 models.Base.metadata.create_all(engine)
 
 
+app.include_router(auth.router)
 app.include_router(blog_router.router)
 app.include_router(user_router.router)
+

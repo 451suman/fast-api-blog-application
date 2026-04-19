@@ -44,4 +44,4 @@ def get_user(id, db: Session = Depends(get_db)):
     #         status_code=status.HTTP_404_NOT_FOUND, detail="user not found"
     #     )
     # return user
-    return user_repository.get_user_with_blog(user_id=id, db=db)
+    return user_repository.get_user_with_blog(user_id= id, db=db)
